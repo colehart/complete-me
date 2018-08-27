@@ -16,17 +16,30 @@ describe('Trie', () => {
     assert.equal(trie.count, 0);
   });
 
-  it('should have a default head of null', () => {
-    assert.isNull(trie.head);
+  it('should have a default root of null', () => {
+    assert.isNull(trie.root);
   });
 
   it('should be able to take in words', () => {
-    trie.insert("hello");
+    trie.insert('hello');
 
     assert.equal(trie.count, 1);
 
-    trie.insert("world");
+    trie.insert('world');
 
     assert.equal(trie.count, 2);
   });
+
+  it('should add new node when taking in a new word', () => {
+    trie.insert('hello');
+
+    assert.deepEqual(trie.root, { data: 'hello', next: null });
+  });
+
+  it('should add multiple new nodes', () => {
+    trie.insert('hello');
+    trie.insert('world');
+
+    assert.deepEqual(trie.root.next, { data: 'world', next: null });
+  })
 });
