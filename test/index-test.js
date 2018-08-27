@@ -1,6 +1,6 @@
  import { assert } from 'chai';
 
- describe('test', function() {
+ describe('index.js', function() {
    it('should return true', function() {
      assert.equal(true, true);
    });
