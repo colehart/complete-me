@@ -57,12 +57,12 @@ describe('Trie', () => {
     });
   });
 
-  it.skip('should suggest a word based on a prefix', () => {
+  it('should suggest a word based on a prefix', () => {
     trie.insert('hello');
     trie.insert('world');
 
-    result1 = trie.suggest('he');
-    result2 = trie.suggest('w');
+    let result1 = trie.suggest('he');
+    let result2 = trie.suggest('w');
 
     assert.deepEqual(result1, ['hello']);
     assert.deepEqual(result2, ['world']);
@@ -72,7 +72,7 @@ describe('Trie', () => {
     trie.insert('hello');
     trie.insert('hellen');
 
-    result = trie.suggest('he');
+    let result = trie.suggest('he');
 
     assert.deepEqual(result, ['hello', 'hellen'])
   });
