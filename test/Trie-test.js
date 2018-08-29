@@ -52,7 +52,7 @@ describe('Trie', () => {
     trie.insert('hello');
     trie.insert('he');
     trie.insert('hell');
-    trie.insert('helloween');
+    trie.insert('helicopter');
     trie.insert('held');
     trie.insert('help');
     trie.insert('helping');
@@ -62,7 +62,7 @@ describe('Trie', () => {
     assert.isFalse(trie.root.children['h'].children['e'].children['l'].lastLetter);
     assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].lastLetter);
     assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].children['w'].children['e'].children['e'].children['n'].lastLetter);
+    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['i'].children['c'].children['o'].children['p'].children['t'].children['e'].children['r'].lastLetter);
     assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['d'].lastLetter);
     assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['p'].lastLetter);
     assert.isFalse(trie.root.children['h'].children['e'].children['l'].children['p'].children['i'].lastLetter);
@@ -81,11 +81,17 @@ describe('Trie', () => {
 
   it.skip('should suggest all matching world based on a prefix', () => {
     trie.insert('hello');
-    trie.insert('hellen');
+    trie.insert('world');
 
     let result = trie.suggest('he');
 
-    assert.deepEqual(result, ['hello', 'hellen'])
+    assert.deepEqual(result, ['hello']);
+
+    trie.insert('hellen');
+
+    let result2 = trie.suggest('he');
+
+    assert.deepEqual(result2, ['hello', 'hellen']);
   });
 
   it.skip('should be able to take in words and return the count', () => {
