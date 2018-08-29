@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import fs from 'fs';
 import locus from 'locus';
 import Trie from '../lib/Trie';
 
@@ -25,7 +26,7 @@ describe('Trie', () => {
     trie.insert('h');
 
     assert.isNull(trie.root.letter);
-    assert.deepEqual(trie.root.children, { h: { letter: 'h', lastLetter: true, children: {} } });
+    assert.deepEqual(trie.root.children, { h: { letter: 'h', endOf: 'h', children: {} } });
   });
 
   it('should add new branch when taking in a new word', () => {
@@ -36,14 +37,14 @@ describe('Trie', () => {
     assert.equal(trie.root.children['h'].children['e'].children['l'].letter, 'l');
     assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].letter, 'l');
     assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].letter, 'o');
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].lastLetter);
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].endOf, 'hello');
   });
 
   it('should add multiple new nodes of different words', () => {
     trie.insert('hello');
     trie.insert('world');
 
-    let trieChildKeys = Object.keys(trie.root.children);
+    const trieChildKeys = Object.keys(trie.root.children);
 
     assert.deepEqual(trieChildKeys, ['h', 'w']);
   });
@@ -57,23 +58,23 @@ describe('Trie', () => {
     trie.insert('help');
     trie.insert('helping');
 
-    assert.isFalse(trie.root.children['h'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].lastLetter);
-    assert.isFalse(trie.root.children['h'].children['e'].children['l'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['i'].children['c'].children['o'].children['p'].children['t'].children['e'].children['r'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['d'].lastLetter);
-    assert.isTrue(trie.root.children['h'].children['e'].children['l'].children['p'].lastLetter);
-    assert.isFalse(trie.root.children['h'].children['e'].children['l'].children['p'].children['i'].lastLetter);
+    assert.isNull(trie.root.children['h'].endOf);
+    assert.equal(trie.root.children['h'].children['e'].endOf, 'he');
+    assert.isNull(trie.root.children['h'].children['e'].children['l'].endOf);
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].endOf, 'hell');
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].endOf, 'hello');
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['i'].children['c'].children['o'].children['p'].children['t'].children['e'].children['r'].endOf, 'helicopter');
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['d'].endOf, 'held');
+    assert.equal(trie.root.children['h'].children['e'].children['l'].children['p'].endOf, 'help');
+    assert.isNull(trie.root.children['h'].children['e'].children['l'].children['p'].children['i'].endOf);
   });
 
   it('should suggest a word based on a prefix', () => {
     trie.insert('hello');
     trie.insert('world');
 
-    let result1 = trie.suggest('he');
-    let result2 = trie.suggest('w');
+    const result1 = trie.suggest('he');
+    const result2 = trie.suggest('w');
 
     assert.deepEqual(result1, ['hello']);
     assert.deepEqual(result2, ['world']);
@@ -83,13 +84,13 @@ describe('Trie', () => {
     trie.insert('hello');
     trie.insert('world');
 
-    let result = trie.suggest('he');
+    const result = trie.suggest('he');
 
     assert.deepEqual(result, ['hello']);
 
     trie.insert('hellen');
 
-    let result2 = trie.suggest('he');
+    const result2 = trie.suggest('he');
 
     assert.deepEqual(result2, ['hello', 'hellen']);
   });
@@ -101,4 +102,16 @@ describe('Trie', () => {
     trie.insert('world');
     assert.equal(trie.count(), 2);
   });
+
+  it.skip('should populate the trie with the default dictionary', () => {
+    const path = '/usr/share/dict/words'
+    const dictionary = fs.readFileSync(path).toString().trim().split('\n');
+
+    trie.populate(dictionary);
+
+    const count = trie.count();
+
+    assert.equal(count, 235886)
+  })
+
 });

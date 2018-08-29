@@ -22,7 +22,7 @@ describe('Node', () => {
   it('should default to not being the last letter', () => {
     node = new Node();
 
-    assert.isFalse(node.lastLetter);
+    assert.isNull(node.endOf);
   });
 
   it('should default to having an empty object of children', () => {
