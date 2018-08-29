@@ -80,7 +80,15 @@ describe('Trie', () => {
     assert.deepEqual(result2, ['world']);
   });
 
-  it.skip('should suggest all matching world based on a prefix', () => {
+  it('should not suggest a word that does not occur in our trie', () => {
+    trie.insert('hello');
+
+    const result = trie.suggest('hey');
+
+    assert.equal(result, undefined);
+  })
+
+  it('should suggest all matching world based on a prefix', () => {
     trie.insert('hello');
     trie.insert('world');
 
@@ -95,7 +103,7 @@ describe('Trie', () => {
     assert.deepEqual(result2, ['hello', 'hellen']);
   });
 
-  it.skip('should be able to take in words and return the count', () => {
+  it('should be able to take in words and return the count', () => {
     trie.insert('hello');
     assert.equal(trie.count(), 1);
 
@@ -103,7 +111,7 @@ describe('Trie', () => {
     assert.equal(trie.count(), 2);
   });
 
-  it.skip('should populate the trie with the default dictionary', () => {
+  it('should populate the trie with the default dictionary', () => {
     const path = '/usr/share/dict/words'
     const dictionary = fs.readFileSync(path).toString().trim().split('\n');
 
