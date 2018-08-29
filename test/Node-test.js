@@ -1,30 +1,35 @@
 import { assert } from 'chai'
+import locus from 'locus';
 import Node from '../lib/Node'
 
 describe('Node', () => {
   let node;
 
   beforeEach(() => {
-    node = new Node('sammich');
+    node = new Node('a');
   });
 
   it('should be a class', () => {
     assert.instanceOf(node, Node);
   });
 
-  it('should default to a next of null', () => {
-    assert.isNull(node.next);
+  it('should default to having a null letter', () => {
+    node = new Node();
+
+    assert.isNull(node.letter);
   });
 
-  it('should receive data', () => {
-    assert.equal(node.data, 'sammich');
+  it('should default to not being the last letter', () => {
+    node = new Node();
+
+    assert.isFalse(node.lastLetter);
   });
 
-  it('should have access to full English alphabet', () => {
-    assert.deepEqual(node.letters, ['a', 'b', 'c',
-      'd', 'e', 'f', 'g', 'h', 'i',
-      'j', 'k', 'l', 'm', 'n', 'o',
-      'p', 'q', 'r', 's', 't', 'u',
-      'v', 'w', 'x', 'y', 'z'])
+  it('should default to having an empty object of children', () => {
+    assert.deepEqual(node.children, {});
+  });
+
+  it('should receive a letter', () => {
+    assert.equal(node.letter, 'a');
   });
 });
