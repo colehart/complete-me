@@ -80,12 +80,12 @@ describe('Trie', () => {
     assert.deepEqual(result2, ['world']);
   });
 
-  it('should not suggest a word that does not occur in our trie', () => {
+  it('should not suggest a word that does not occur in the trie', () => {
     trie.insert('hello');
 
     const result = trie.suggest('hey');
 
-    assert.equal(result, undefined);
+    assert.isUndefined(result);
   })
 
   it('should suggest all matching world based on a prefix', () => {
