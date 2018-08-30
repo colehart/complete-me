@@ -86,9 +86,9 @@ describe('Trie', () => {
     const result = trie.suggest('hey');
 
     assert.isUndefined(result);
-  })
+  });
 
-  it('should suggest all matching world based on a prefix', () => {
+  it('should suggest all possible words based on a prefix', () => {
     trie.insert('hello');
     trie.insert('world');
 
@@ -120,6 +120,5 @@ describe('Trie', () => {
     const count = trie.count();
 
     assert.equal(count, 235886)
-  })
-
+  });
 });
