@@ -25,18 +25,17 @@ describe('Trie', () => {
   it('should add new node when taking in a new letter', () => {
     trie.insert('h');
 
-    assert.isNull(trie.root.letter);
-    assert.deepEqual(trie.root.children, { h: { letter: 'h', endOf: 'h', children: {} } });
+    assert.deepEqual(trie.root.children, { h: { endOf: 'h', children: {} } });
   });
 
   it('should add new branch when taking in a new word', () => {
     trie.insert('hello');
 
-    assert.equal(trie.root.children['h'].letter, 'h');
-    assert.equal(trie.root.children['h'].children['e'].letter, 'e');
-    assert.equal(trie.root.children['h'].children['e'].children['l'].letter, 'l');
-    assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].letter, 'l');
-    assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].letter, 'o');
+    assert.exists(trie.root.children['h']);
+    assert.exists(trie.root.children['h'].children['e']);
+    assert.exists(trie.root.children['h'].children['e'].children['l']);
+    assert.exists(trie.root.children['h'].children['e'].children['l'].children['l']);
+    assert.exists(trie.root.children['h'].children['e'].children['l'].children['l'].children['o']);
     assert.equal(trie.root.children['h'].children['e'].children['l'].children['l'].children['o'].endOf, 'hello');
   });
 
@@ -122,3 +121,4 @@ describe('Trie', () => {
     assert.equal(count, 235886)
   });
 });
+// it should increment the word count, it should not increment the word count if word is duplicate,

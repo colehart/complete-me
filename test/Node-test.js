@@ -13,12 +13,6 @@ describe('Node', () => {
     assert.instanceOf(node, Node);
   });
 
-  it('should default to having a null letter', () => {
-    node = new Node();
-
-    assert.isNull(node.letter);
-  });
-
   it('should default to not being the last letter', () => {
     node = new Node();
 
@@ -28,8 +22,6 @@ describe('Node', () => {
   it('should default to having an empty object of children', () => {
     assert.deepEqual(node.children, {});
   });
-
-  it('should receive a letter', () => {
-    assert.equal(node.letter, 'a');
-  });
 });
+
+// it exists, it is an instance of node, it hast he correct default properties, it takes in a letter

@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "complete-me",
   "version": "1.0.0",
-  "description": "",
+  "description": "Autocomplete prefix trie",
   "main": "index.js",
   "directories": {
     "lib": "lib",
