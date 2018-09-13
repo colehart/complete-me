@@ -1,5 +1,5 @@
 {
-  "name": "complete-me",
+  "name": "@colehart/complete-me",
   "version": "1.0.0",
   "description": "Autocomplete prefix trie",
   "main": "index.js",
